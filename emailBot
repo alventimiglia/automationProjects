@@ -1,0 +1,25 @@
+import smtplib
+from email.message import EmailMessage
+#Can also do it as speech to text rather than inputs
+
+receiver = input('What is the email address of who should receive the message? ')
+subject = input('What is the subject of this email? ')
+message = input('What is the message of this email? ')
+
+def send_email(receiver, subject, message):
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login('thisistheemail@gmail.com', 'Thisisthepassword') #would never want to actually put your password in here
+    email = EmailMessage()
+    email['From'] = 'thisistheemail@gmail.com'
+    email['To'] = receiver
+    email['Subject'] = subject
+    email.set_content(message)
+    server.send_message(email)
+    #server.sendmail('thisistheemail@gmail.com',
+                   # 'receiverofemail@gmail.com',
+                   # 'This is the message we are going to send in the email.')
+
+send_email(receiver, subject, message)
+
+#in order to get this to actually work, would have to go to manage account and turn on access in the 'less secure app access' section
