@@ -1,0 +1,27 @@
+import googletrans
+import speech_recognition as sr
+import gtts
+import playsound
+
+#print(googletrans.LANGUAGES)
+
+recognizer = sr.Recognizer()
+translator = googletrans.Translator()
+input_lang = 'en-US'
+#information on google speech-to-text supported languages
+to_lang = 'fr'
+
+try:
+    with sr.Microphone() as source:
+        print('Speak Now')
+        voice = recognizer.listen(source)
+        text = recognizer.recognize_google(voice, language=input_lang)
+        print(text)
+except:
+    pass
+
+translated = translator.translate(text, dest=to_lang)
+print(translated.text)
+converted_audio = gtts.gTTS(translated.text, lang=to_lang)
+converted_audio.save('translated.mp3')
+playsound.playsound('translated.mp3')
